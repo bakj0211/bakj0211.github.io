@@ -3,87 +3,933 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>박제이 - 포트폴리오</title>
+    <title>Park Jei - Graphic Designer Portfolio</title>
     <style>
+        /* 기본 리셋 및 전역 스타일 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #808080;
+            --light-gray: #f5f5f5;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 부드러운 스크롤 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 네비게이션 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid var(--light-gray);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
-        
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 60px 80px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-in;
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            transition: all 0.4s ease;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+
+        .logo:hover {
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--black);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 햄버거 메뉴 */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--black);
+            transition: all 0.3s ease;
+        }
+
+        /* 히어로 섹션 - 매거진 스타일 */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            letter-spacing: -3px;
+        }
+
+        .hero-subtitle {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 500px;
+            margin-bottom: 3rem;
+            color: var(--gray);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background-color: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--gray);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: fadeInRight 1s ease forwards 0.5s;
+        }
+
+        .hero-image-frame {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+        }
+
+        .hero-image-frame::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--black);
+            z-index: -1;
+        }
+
+        .hero-image-frame img {
+            width: 100%;
+            display: block;
+            filter: grayscale(100%);
+            transition: filter 0.6s ease;
+        }
+
+        .hero-image-frame:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* About 섹션 */
+        .about {
+            padding: 8rem 5%;
+            background-color: var(--light-gray);
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .section-header.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section-number {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .about-image.visible {
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 450px;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        .about-text {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        .about-text.visible {
+            animation: fadeInRight 0.8s ease forwards 0.2s;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Skills 섹션 */
+        .skills {
+            padding: 8rem 5%;
+            background-color: var(--white);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .skill-item {
+            padding: 2.5rem;
+            border: 2px solid var(--light-gray);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .skill-item.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .skill-item:hover {
+            border-color: var(--black);
+            transform: translateY(-10px);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .skill-description {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Projects 섹션 - 매거진 스타일 */
+        .projects {
+            padding: 8rem 5%;
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        .projects .section-title {
+            color: var(--white);
+        }
+
+        .projects .section-number {
+            color: var(--gray);
+        }
+
+        .project-item {
+            margin-bottom: 8rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .project-item.visible {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .project-item:nth-child(odd) .project-content {
+            grid-template-columns: 1.2fr 0.8fr;
+        }
+
+        .project-item:nth-child(even) .project-content {
+            grid-template-columns: 0.8fr 1.2fr;
+        }
+
+        .project-content {
+            display: grid;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .project-item:nth-child(even) .project-image {
+            order: -1;
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            display: block;
+            filter: grayscale(100%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-image:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .project-info h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .project-category {
+            color: var(--gray);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--gray);
+            font-size: 0.85rem;
+            transition: all 0.4s ease;
+        }
+
+        .tag:hover {
+            background-color: var(--white);
+            color: var(--black);
+            border-color: var(--white);
+        }
+
+        /* Contact 섹션 */
+        .contact {
+            padding: 8rem 5%;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .contact-content.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .contact h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -2px;
+        }
+
+        .contact-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 4rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 1.2rem 2.5rem;
+            border: 2px solid var(--black);
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 600;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--black);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .contact-link:hover::before {
+            left: 0;
+        }
+
+        .contact-link:hover {
+            color: var(--white);
+        }
+
+        .contact-link span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        footer a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--gray);
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 30px;
-            border: 5px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        h1 {
-            font-size: 4rem;
-            color: #2d3748;
-            margin-bottom: 20px;
-            font-weight: 700;
-            letter-spacing: -2px;
-        }
-        
-        p {
-            font-size: 1.2rem;
-            color: #718096;
-            line-height: 1.6;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 30px;
+
+        @keyframes fadeInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
-            
-            h1 {
+        }
+
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
                 font-size: 2.5rem;
             }
-            
-            p {
-                font-size: 1rem;
+
+            .about-grid,
+            .project-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .project-item:nth-child(even) .project-image {
+                order: 0;
+            }
+
+            .project-item:nth-child(odd) .project-content,
+            .project-item:nth-child(even) .project-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 5% 3rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-image-frame {
+                margin: 3rem auto 0;
+                max-width: 350px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-link {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem 5%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .project-info h3 {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="images/profile.jpg" alt="박제이 프로필 사진" class="profile-img">
-        <h1>박제이</h1>
-        <p>포트폴리오 웹사이트에 오신 것을 환영합니다</p>
-    </div>
-</body>
-</html>
+    <!-- 네비게이션 -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">PARK JEI</div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-label">Graphic Designer</div>
+            <h1>PARK<br>JEI</h1>
+            <div class="hero-subtitle">Visual Storyteller</div>
+            <p class="hero-description">
+                안녕하세요! 귀여운 디자이너입니다.<br>
+                창의적인 비주얼로 이야기를 전달하는 것을 좋아합니다.
+            </p>
+            <a href="#projects" class="cta-button">
+                <span>View My Work</span>
+            </a>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-frame">
+                <img src="https://via.placeholder.com/500x600/000000/FFFFFF?text=PARK+JEI" alt="Park Jei">
+            </div>
+        </div>
+    </section>
+
+    <!-- About 섹션 -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-number">01 — ABOUT ME</div>
+                <h2 class="section-title">Who I Am</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/450x550/808080/FFFFFF?text=About+Me" alt="About Park Jei">
+                </div>
+                <div class="about-text">
+                    <h3>안녕하세요, 박제이입니다</h3>
+                    <p>
+                        그래픽 디자이너로서 브랜드의 본질을 시각적으로 표현하는 일을 하고 있습니다. 
+                        미니멀하면서도 강렬한 디자인을 추구하며, 각 프로젝트에 독특한 개성을 불어넣습니다.
+                    </p>
+                    <p>
+                        디자인은 단순히 아름다운 것을 만드는 것이 아니라, 메시지를 효과적으로 전달하는 
+                        커뮤니케이션 도구라고 믿습니다. 클라이언트와의 긴밀한 협업을 통해 최상의 결과물을 
+                        만들어내는 것을 목표로 합니다.
+                    </p>
+                    <p>
+                        타이포그래피, 레이아웃, 컬러 이론에 대한 깊은 이해를 바탕으로 
+                        시각적으로 일관되고 임팩트 있는 디자인을 제공합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills 섹션 -->
+    <section class="skills" id="skills">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-number">02 — SKILLS</div>
+                <h2 class="section-title">What I Do</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-icon">✦</div>
+                    <div class="skill-name">Brand Identity</div>
+                    <div class="skill-description">
+                        로고, 컬러 팔레트, 타이포그래피를 통한 
+                        일관된 브랜드 아이덴티티 구축
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">✦</div>
+                    <div class="skill-name">Editorial Design</div>
+                    <div class="skill-description">
+                        매거진, 브로슈어, 북 디자인 등 
+                        에디토리얼 레이아웃 전문
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">✦</div>
+                    <div class="skill-name">Packaging Design</div>
+                    <div class="skill-description">
+                        제품의 가치를 높이는 
+                        창의적인 패키징 솔루션
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">✦</div>
+                    <div class="skill-name">Digital Design</div>
+                    <div class="skill-description">
+                        웹사이트, 앱 UI/UX, 소셜 미디어 
+                        콘텐츠 디자인
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects 섹션 -->
+    <section class="projects" id="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-number">03 — PROJECTS</div>
+                <h2 class="section-title">Selected Works</h2>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-item">
+                <div class="project-content">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/800x600/000000/FFFFFF?text=MINIMAL+BRAND" alt="Project 1">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Brand Identity</div>
+                        <h3>Minimal Brand Identity</h3>
+                        <p class="project-description">
+                            심플하면서도 강렬한 인상을 남기는 브랜드 아이덴티티 프로젝트입니다. 
+                            블랙 앤 화이트의 조화로 타임리스한 디자인을 구현했습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Branding</span>
+                            <span class="tag">Logo Design</span>
+                            <span class="tag">Print</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-item">
+                <div class="project-content">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/800x600/808080/FFFFFF?text=MAGAZINE+LAYOUT" alt="Project 2">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Editorial Design</div>
+                        <h3>Magazine Layout Series</h3>
+                        <p class="project-description">
+                            독창적인 그리드 시스템과 타이포그래피를 활용한 매거진 레이아웃 시리즈입니다. 
+                            가독성과 시각적 즐거움의 균형을 추구했습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Editorial</span>
+                            <span class="tag">Typography</span>
+                            <span class="tag">Layout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-item">
+                <div class="project-content">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/800x600/000000/FFFFFF?text=PACKAGE+DESIGN" alt="Project 3">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Packaging Design</div>
+                        <h3>Luxury Package Design</h3>
+                        <p class="project-description">
+                            프리미엄 제품을 위한 패키징 디자인 프로젝트입니다. 
+                            미니멀한 디자인으로 제품의 고급스러움을 극대화했습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Packaging</span>
+                            <span class="tag">3D Mockup</span>
+                            <span class="tag">Premium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-item">
+                <div class="project-content">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/800x600/808080/FFFFFF?text=WEB+DESIGN" alt="Project 4">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Digital Design</div>
+                        <h3>Responsive Web Design</h3>
+                        <p class="project-description">
+                            사용자 경험을 최우선으로 고려한 반응형 웹사이트 디자인입니다. 
+                            모든 디바이스에서 일관된 경험을 제공합니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Web Design</span>
+                            <span class="tag">UI/UX</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact 섹션 -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="contact-content">
+                <h2>Let's Work Together</h2>
+                <p class="contact-description">
+                    새로운 프로젝트에 대한 아이디어가 있으신가요?<br>
+                    언제든지 연락 주세요. 함께
